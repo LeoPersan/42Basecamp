@@ -25,7 +25,7 @@ int	ft_all_str_lens(int size, char **strs, char *sep)
 		chars += ft_strlen(sep);
 		i++;
 	}
-	return (chars + ft_strlen(strs[i]));
+	return (chars + ft_strlen(strs[i]) + 1);
 }
 
 char	*ft_strjoin(int size, char **strs, char *sep)
@@ -40,17 +40,18 @@ char	*ft_strjoin(int size, char **strs, char *sep)
 	join = (char *)malloc(chars * sizeof(char));
 	i = 0;
 	j = 0;
-	while (i < size - 1)
+	while (i < size)
 	{
 		while (*strs[i])
 			join[j++] = *strs[i]++;
-		s = 0;
-		while (sep[s])
-			join[j++] = sep[s++];
+		if (i < size - 1)
+		{
+			s = 0;
+			while (sep[s])
+				join[j++] = sep[s++];
+		}
 		i++;
 	}
-	if (i < size)
-		while (*strs[i])
-			join[j++] = *strs[i]++;
+	join[j] = '\0';
 	return (join);
 }
