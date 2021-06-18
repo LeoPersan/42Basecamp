@@ -3,19 +3,17 @@
 int	ft_ultimate_range(int **range, int min, int max)
 {
 	int	i;
-	int	*vector;
 
-	if (min > max)
+	if (min >= max)
 	{
-		range = NULL;
+		*range = NULL;
 		return (0);
 	}
 	*range = (int *)malloc((max - min) * sizeof(int));
-	if (*range == NULL)
+	if (!*range)
 		return (-1);
-	vector = *range;
 	i = 0;
 	while (min < max)
-		*(vector++) = min++;
+		*(*range + i++) = min++;
 	return (i);
 }
