@@ -1,35 +1,24 @@
 #include <unistd.h>
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
 void	ft_putnbr(int nb)
 {
-	int	character[11];
-	int	length;
-	int	is_negative;
+	char		c;
+	long int	nb_aux;
 
-	if (nb == 0)
-		ft_putchar('0');
-	is_negative = 0;
-	if (nb < 0)
+	nb_aux = nb;
+	if (nb_aux < 0)
 	{
-		is_negative = 1;
-		nb *= -1;
+		write(1, "-", 1);
+		nb_aux *= -1;
 	}
-	length = 0;
-	while (nb != 0)
+	if (nb_aux > 9)
 	{
-		character[length] = nb % 10;
-		nb = nb / 10;
-		length++;
+		ft_putnbr(nb_aux / 10);
+		ft_putnbr(nb_aux % 10);
 	}
-	if (is_negative)
-		ft_putchar('-');
-	while (length-- > 0)
+	else
 	{
-		ft_putchar('0' + character[length]);
+		c = '0' + nb_aux;
+		write(1, &c, 1);
 	}
 }
