@@ -1,42 +1,36 @@
 #include <unistd.h>
+#include <stdio.h>
 
-void	quick_sort_core(int *tab, int *i, int *j)
+void	quick_sort(int *tab, int start, int end)
 {
 	int	pivo;
 	int	aux;
+	int	s;
+	int	e;
 
-	pivo = tab[(*i + *j) / 2];
-	while (*i <= *j)
+	s = start;
+	e = end;
+	pivo = tab[(s + e) / 2];
+	while (s < e)
 	{
-		while (tab[*i] < pivo)
-			*i = *i + 1;
-		while (tab[*j] > pivo)
-			*j = *j - 1;
-		if (*i <= *j)
+		while (tab[s] < pivo)
+			s++;
+		while (tab[e] > pivo)
+			e--;
+		if (s <= e)
 		{
-			aux = tab[*j];
-			tab[*j] = tab[*i];
-			tab[*i] = aux;
-			*i = *i + 1;
-			*j = *j - 1;
+			aux = tab[e];
+			tab[e--] = tab[s];
+			tab[s++] = aux;
 		}
 	}
+	if (start < e)
+		quick_sort(tab, start, e);
+	if (end > s)
+		quick_sort(tab, s, end);
 }
 
-void	ft_sort_int_tab(int *tab, int size, int start, int end)
+void	ft_sort_int_tab(int *tab, int size)
 {
-	int	i;
-	int	j;
-
-	if (start < 0 || start > size)
-		start = 0;
-	i = start;
-	if (end < 0 || end > size)
-		end = size - 1;
-	j = end;
-	quick_sort_core(tab, &i, &j);
-	if (start < j)
-		ft_sort_int_tab(tab, size, start, j);
-	if (end > i)
-		ft_sort_int_tab(tab, size, i, end);
+	quick_sort(tab, 0, size - 1);
 }
